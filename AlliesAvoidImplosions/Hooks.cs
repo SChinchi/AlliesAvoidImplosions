@@ -104,9 +104,10 @@ namespace AlliesAvoidImplosions
 
         private static void BuildImplosionProjectileList()
         {
+            var voidDeathType = (DamageTypeCombo)DamageType.VoidDeath;
             foreach (var projectile in ProjectileCatalog.projectilePrefabProjectileControllerComponents)
             {
-                if (projectile.TryGetComponent<ProjectileDamage>(out var damage) && (damage.damageType & DamageType.VoidDeath) == DamageType.VoidDeath)
+                if (projectile.TryGetComponent<ProjectileDamage>(out var damage) && (damage.damageType & voidDeathType) == voidDeathType)
                 {
                     implosionProjectiles.Add(projectile.catalogIndex);
                 }
