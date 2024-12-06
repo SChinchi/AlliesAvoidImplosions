@@ -25,7 +25,7 @@ namespace AlliesAvoidImplosions
             On.RoR2.Projectile.ProjectileController.OnDestroy += OnDestroyProjectile;
             if (Configuration.immuneToVoidDeath.Value)
             {
-                IL.RoR2.HealthComponent.TakeDamage += IgnoreVoidDeathForAllies;
+                IL.RoR2.HealthComponent.TakeDamageProcess += IgnoreVoidDeathForAllies;
             }
         }
 
@@ -35,7 +35,7 @@ namespace AlliesAvoidImplosions
             On.RoR2.Projectile.ProjectileController.OnDestroy -= OnDestroyProjectile;
             if (Configuration.immuneToVoidDeath.Value)
             {
-                IL.RoR2.HealthComponent.TakeDamage -= IgnoreVoidDeathForAllies;
+                IL.RoR2.HealthComponent.TakeDamageProcess -= IgnoreVoidDeathForAllies;
             }
         }
 
@@ -44,9 +44,9 @@ namespace AlliesAvoidImplosions
             var c = new ILCursor(il);
             if (!c.TryGotoNext(
                 x => x.MatchLdfld<CharacterBody>("bodyFlags"),
-                x => x.MatchLdcI4(0x800)))
+                x => x.MatchLdcI4((int)CharacterBody.BodyFlags.ImmuneToVoidDeath)))
             {
-                AlliesAvoidImplosions.Logger.LogError("Failed to patch HealthComponent.TakeDamage");
+                AlliesAvoidImplosions.Logger.LogError("Failed to patch " + il.Method.Name);
                 return;
             }
             c.Index += 1;
