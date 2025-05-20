@@ -35,7 +35,7 @@ internal class GTFOHController : MonoBehaviour
             foreach (var implosion in Hooks.implosions)
             {
                 var distance = Vector3.Distance(implosion.transform.position, body.transform.position);
-                if (distance < Configuration.evasionDistance.Value && distance < minDistance)
+                if (distance < Configs.EvasionDistance.Value && distance < minDistance)
                 {
                     minDistance = distance;
                     go = implosion;

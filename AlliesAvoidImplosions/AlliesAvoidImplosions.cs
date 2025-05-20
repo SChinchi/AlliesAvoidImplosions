@@ -10,6 +10,7 @@ using System.Security.Permissions;
 namespace AlliesAvoidImplosions;
 
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
+[BepInDependency(RiskOfOptionsGUID, BepInDependency.DependencyFlags.SoftDependency)]
 [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
 public class AlliesAvoidImplosions : BaseUnityPlugin
 {
@@ -17,6 +18,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     public const string PluginAuthor = "Chinchi";
     public const string PluginName = "AlliesAvoidImplosions";
     public const string PluginVersion = "1.0.1";
+    internal const string RiskOfOptionsGUID = "com.rune580.riskofoptions";
 
     internal static readonly string[] defaultAllies =
     [
@@ -35,7 +37,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     private void Awake()
     {
         Log.Init(Logger);
-        Configuration.Init(Config);
+        Configs.Init(Config, Info.Location);
         Hooks.Init();
         RoR2Application.onLoad += Hooks.LoadDataAndPatch;
     }

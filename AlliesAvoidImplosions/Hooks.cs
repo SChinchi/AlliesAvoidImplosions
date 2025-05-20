@@ -14,6 +14,8 @@ namespace AlliesAvoidImplosions;
 
 internal class Hooks
 {
+    private const string BACKUP_DRIVER_NAME = "BackUpFromImplosion";
+
     internal static readonly HashSet<GameObject> implosions = [];
     private static readonly HashSet<int> implosionProjectiles = [];
     private static readonly HashSet<MasterCatalog.MasterIndex> backupMasterIndices = [];
@@ -23,10 +25,7 @@ internal class Hooks
     {
         On.RoR2.Projectile.ProjectileController.Awake += OnSpawnProjectile;
         On.RoR2.Projectile.ProjectileController.OnDestroy += OnDestroyProjectile;
-        if (Configuration.immuneToVoidDeath.Value)
-        {
-            IL.RoR2.HealthComponent.TakeDamageProcess += IgnoreVoidDeathForAllies;
-        }
+        IL.RoR2.HealthComponent.TakeDamageProcess += IgnoreVoidDeathForAllies;
     }
 
     private static void IgnoreVoidDeathForAllies(ILContext il)
@@ -44,7 +43,7 @@ internal class Hooks
         c.EmitDelegate<Func<CharacterBody.BodyFlags, HealthComponent, CharacterBody.BodyFlags>>((bodyFlags, healthComponent) =>
         {
             var master = healthComponent.body.master;
-            if (master && immuneMasterIndices.Contains(master.masterIndex) && Configuration.immuneToVoidDeath.Value)
+            if (Configs.ImmuneToVoidDeath.Value && master && immuneMasterIndices.Contains(master.masterIndex))
             {
                 bodyFlags |= CharacterBody.BodyFlags.ImmuneToVoidDeath;
             }
@@ -92,8 +91,8 @@ internal class Hooks
 
     private static void BuildAllyIDs()
     {
-        BuildMasterIndices(Configuration.additionalBackupEntries, Configuration.blacklistedBackupEntries, backupMasterIndices);
-        BuildMasterIndices(Configuration.additionalImmuneEntries, Configuration.blacklistedImmuneEntries, immuneMasterIndices);
+        BuildMasterIndices(Configs.AdditionalBackupEntries, Configs.BlacklistedBackupEntries, backupMasterIndices);
+        BuildMasterIndices(Configs.AdditionalImmuneEntries, Configs.BlacklistedImmuneEntries, immuneMasterIndices);
     }
 
     private static void BuildMasterIndices(ConfigEntry<string> additionalConfig, ConfigEntry<string> blacklistedConfig, HashSet<MasterCatalog.MasterIndex> indices)
@@ -143,9 +142,9 @@ internal class Hooks
                     var originalSkillDrivers = master.GetComponents<AISkillDriver>();
 
                     var component = master.AddComponent<AISkillDriver>();
-                    component.customName = "BackUpFromImplosion";
+                    component.customName = BACKUP_DRIVER_NAME;
                     component.skillSlot = SkillSlot.None;
-                    component.maxDistance = Configuration.evasionDistance.Value;
+                    component.maxDistance = Configs.EvasionDistance.Value;
                     component.moveTargetType = AISkillDriver.TargetType.Custom;
                     component.aimType = AISkillDriver.AimType.AtMoveTarget;
                     component.movementType = AISkillDriver.MovementType.FleeMoveTarget;
@@ -167,6 +166,38 @@ internal class Hooks
                     }
 
                     master.AddComponent<GTFOHController>();
+                }
+            }
+        }
+    }
+
+    internal static void UpdateBackUpDistance()
+    {
+        foreach (var index in backupMasterIndices)
+        {
+            var master = MasterCatalog.GetMasterPrefab(index);
+            if (master)
+            {
+                Update(master);
+            }
+        }
+        foreach (var master in CharacterMaster.instancesList)
+        {
+            if (backupMasterIndices.Contains(master.masterIndex))
+            {
+                Update(master.gameObject);
+            }
+        }
+
+        static void Update(GameObject master)
+        {
+            var drivers = master.GetComponents<AISkillDriver>();
+            foreach (var driver in drivers)
+            {
+                if (driver.customName == BACKUP_DRIVER_NAME)
+                {
+                    driver.maxDistance = Configs.EvasionDistance.Value;
+                    return;
                 }
             }
         }
