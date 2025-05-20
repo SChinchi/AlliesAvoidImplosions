@@ -17,7 +17,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     public const string PluginGUID = PluginAuthor + "." + PluginName;
     public const string PluginAuthor = "Chinchi";
     public const string PluginName = "AlliesAvoidImplosions";
-    public const string PluginVersion = "1.0.1";
+    public const string PluginVersion = "1.1.0";
     internal const string RiskOfOptionsGUID = "com.rune580.riskofoptions";
 
     internal static readonly string[] defaultAllies =
