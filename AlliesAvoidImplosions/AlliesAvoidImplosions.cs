@@ -18,7 +18,6 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     public const string PluginName = "AlliesAvoidImplosions";
     public const string PluginVersion = "1.0.1";
 
-    internal static new BepInEx.Logging.ManualLogSource Logger;
     internal static readonly string[] defaultAllies =
     [
         "Drone1Master",
@@ -35,7 +34,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
 
     private void Awake()
     {
-        Logger = base.Logger;
+        Log.Init(Logger);
         Configuration.Init(Config);
         Hooks.Init();
         RoR2Application.onLoad += Hooks.LoadDataAndPatch;

@@ -36,7 +36,7 @@ internal class Hooks
             x => x.MatchLdfld<CharacterBody>(nameof(CharacterBody.bodyFlags)),
             x => x.MatchLdcI4((int)CharacterBody.BodyFlags.ImmuneToVoidDeath)))
         {
-            AlliesAvoidImplosions.Logger.LogError("Failed to patch " + il.Method.Name);
+            Log.PatchFail(il);
             return;
         }
         c.Index += 1;
