@@ -18,7 +18,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     public const string PluginGUID = PluginAuthor + "." + PluginName;
     public const string PluginAuthor = "Chinchi";
     public const string PluginName = "AlliesAvoidImplosions";
-    public const string PluginVersion = "1.1.0";
+    public const string PluginVersion = "1.2.0";
     internal const string RiskOfOptionsGUID = "com.rune580.riskofoptions";
     internal const string DroneRecyclerGUID = "Chinchi.DroneRecycler";
 
