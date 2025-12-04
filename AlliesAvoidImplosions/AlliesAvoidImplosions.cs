@@ -11,6 +11,7 @@ namespace AlliesAvoidImplosions;
 
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 [BepInDependency(RiskOfOptionsGUID, BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency(DroneRecyclerGUID, BepInDependency.DependencyFlags.SoftDependency)]
 [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
 public class AlliesAvoidImplosions : BaseUnityPlugin
 {
@@ -19,6 +20,7 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
     public const string PluginName = "AlliesAvoidImplosions";
     public const string PluginVersion = "1.1.0";
     internal const string RiskOfOptionsGUID = "com.rune580.riskofoptions";
+    internal const string DroneRecyclerGUID = "Chinchi.DroneRecycler";
 
     internal static readonly string[] defaultAllies =
     [
