@@ -1,4 +1,5 @@
-﻿using RoR2.CharacterAI;
+﻿using RoR2;
+using RoR2.CharacterAI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ internal class GTFOHController : MonoBehaviour
     private readonly static List<GTFOHController> instancesList = [];
     private BaseAI ai;
 
+    public AISkillDriver skillDriver;
+
     private void Awake()
     {
         instancesList.Add(this);
@@ -18,6 +21,33 @@ internal class GTFOHController : MonoBehaviour
     private void OnDestroy()
     {
         instancesList.Remove(this);
+    }
+
+    private void OnEnable()
+    {
+        if (skillDriver)
+        {
+            skillDriver.enabled = true;
+        }
+        // The Transport Drone interferes with our customTarget, so we need to disable it for now
+        var body = ai.body;
+        if (body && body.TryGetComponent<HaulerDroneController>(out var haulerController))
+        {
+            haulerController.enabled = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (skillDriver)
+        {
+            skillDriver.enabled = false;
+        }
+        var body = ai.body;
+        if (body && body.TryGetComponent<HaulerDroneController>(out var haulerController))
+        {
+            haulerController.enabled = true;
+        }
     }
 
     private void FixedUpdate()

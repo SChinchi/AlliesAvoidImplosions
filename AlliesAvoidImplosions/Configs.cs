@@ -25,7 +25,7 @@ internal class Configs
     {
         AdditionalBackupEntries = config.Bind(RETREAT_SECTION, "Additional Retreat Entities", "EngiWalkerTurretMaster",
             "Additional characters that back away from implosions. Use the master name of the desired entities separated by comma. You can get a list of all masters with `list_ai` from DebugToolkit.");
-        BlacklistedBackupEntries = config.Bind(RETREAT_SECTION, "Blacklisted Retreat Entities", "EmergencyDroneMaster", "Any characters to be blacklisted from exhibiting this behaviour. Mostly because another mod also modifies the AISkillDrivers to use the custom target and it creates an incompatibility. Use the master name of the desired entities separated by comma. You can get a list of all masters with `list_ai` from DebugToolkit.");
+        BlacklistedBackupEntries = config.Bind(RETREAT_SECTION, "Blacklisted Retreat Entities", "", "Any characters to be blacklisted from exhibiting this behaviour. Mostly because another mod also modifies the AISkillDrivers to use the custom target and it creates an incompatibility. Use the master name of the desired entities separated by comma. You can get a list of all masters with `list_ai` from DebugToolkit.");
         ImmuneToVoidDeath = config.Bind(IMMUNITY_SECTION, "Immune To Void Death", false, "Allies affected by this mod are immune to void death. A sure-fire survival alternative.");
         AdditionalImmuneEntries = config.Bind(IMMUNITY_SECTION, "Additional Immune Entities", "",
             "Additional characters to exhibit this behaviour. Use the master name of the desired entities separated by comma. You can get a list of all masters with `list_ai` from DebugToolkit.");

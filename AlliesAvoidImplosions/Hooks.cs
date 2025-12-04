@@ -142,6 +142,7 @@ internal class Hooks
                     var originalSkillDrivers = master.GetComponents<AISkillDriver>();
 
                     var component = master.AddComponent<AISkillDriver>();
+                    component.enabled = false;
                     component.customName = BACKUP_DRIVER_NAME;
                     component.skillSlot = SkillSlot.None;
                     component.maxDistance = Configs.EvasionDistance.Value;
@@ -158,6 +159,7 @@ internal class Hooks
                     {
                         // The AISkillDriver can be subclassed so we can't rely on generics
                         var copy = master.AddComponent(skillDriver.GetType());
+                        ((AISkillDriver)copy).enabled = skillDriver.enabled;
                         foreach (var field in skillDriver.GetType().GetFields())
                         {
                             field.SetValue(copy, field.GetValue(skillDriver));
@@ -165,7 +167,7 @@ internal class Hooks
                         UnityEngine.Object.DestroyImmediate(skillDriver);
                     }
 
-                    master.AddComponent<GTFOHController>();
+                    master.AddComponent<GTFOHController>().skillDriver = component;
                 }
             }
         }
