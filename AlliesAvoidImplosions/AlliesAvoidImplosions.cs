@@ -22,14 +22,24 @@ public class AlliesAvoidImplosions : BaseUnityPlugin
 
     internal static readonly string[] defaultAllies =
     [
+        "BombardmentDroneMaster",
+        "CleanupDroneMaster",
+        "CopycatDroneMaster",
         "Drone1Master",
         "Drone2Master",
         "DroneBackupMaster",
         "DroneMissileMaster",
+        "DTGunnerDroneMaster",
+        "DTHaulerDroneMaster",
+        "DTHealingDroneMaster",
         "EmergencyDroneMaster",
         "EquipmentDroneMaster",
         "FlameDroneMaster",
+        "HaulerDroneMaster",
+        "JailerDroneMaster",
+        "JunkDroneMaster",
         "MegaDroneMaster",
+        "RechargeDroneMaster",
         "Turret1Master",
         "DevotedLemurianMaster"
     ];
